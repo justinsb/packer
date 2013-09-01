@@ -1,5 +1,10 @@
 ## 0.3.6 (unreleased)
 
+FEATURES:
+
+* User variables can now be specified as "required", meaning the user
+  MUST specify a value. Just set the default value to "null". [GH-374]
+
 IMPROVEMENTS:
 
 * core: Much improved interrupt handling. For example, interrupts now
@@ -15,6 +20,8 @@ BUG FIXES:
 * core: Concurrent map access is completely gone, fixing rare issues
   with runtime memory corruption. [GH-307]
 * core: Fix possible panic when ctrl-C during provisioner run.
+* builder/digitalocean: Retry destroy a few times because DO sometimes
+  gives false errors.
 * provisioners/salt-masterless: Use filepath join to properly join paths.
 
 ## 0.3.5 (August 28, 2013)
