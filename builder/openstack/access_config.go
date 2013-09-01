@@ -12,6 +12,8 @@ type AccessConfig struct {
 	Username string `mapstructure:"username"`
 	Password string `mapstructure:"password"`
 	Provider string `mapstructure:"provider"`
+
+	Region   string `mapstructure:"region"`
 }
 
 // Auth returns a valid Auth object for access to openstack services, or
