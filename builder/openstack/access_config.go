@@ -11,6 +11,7 @@ import (
 type AccessConfig struct {
 	Username string `mapstructure:"username"`
 	Password string `mapstructure:"password"`
+	Project  string `mapstructure:"project"`
 	Provider string `mapstructure:"provider"`
 }
 
@@ -19,6 +20,7 @@ type AccessConfig struct {
 func (c *AccessConfig) Auth() (gophercloud.AccessProvider, error) {
 	username := c.Username
 	password := c.Password
+	project := c.Project
 	provider := c.Provider
 
 	if username == "" {
@@ -27,6 +29,9 @@ func (c *AccessConfig) Auth() (gophercloud.AccessProvider, error) {
 	if password == "" {
 		password = os.Getenv("SDK_PASSWORD")
 	}
+	if project == "" {
+		project = os.Getenv("SDK_PROJECT")
+	}
 	if provider == "" {
 		provider = os.Getenv("SDK_PROVIDER")
 	}
@@ -34,6 +39,7 @@ func (c *AccessConfig) Auth() (gophercloud.AccessProvider, error) {
 	authoptions := gophercloud.AuthOptions{
 		Username:    username,
 		Password:    password,
+		TenantName:  project,
 		AllowReauth: true,
 	}
 
