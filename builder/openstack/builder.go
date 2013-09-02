@@ -68,7 +68,13 @@ func (b *Builder) Run(ui packer.Ui, hook packer.Hook, cache packer.Cache) (packe
 	}
 	csp, err := gophercloud.ServersApi(auth, *api)
 	if err != nil {
-		ui.Message(fmt.Sprintf("Auth: %s", auth.GetServiceCatalog()))
+		ui.Message("Discovered endpoints:")
+		sc := auth.GetServiceCatalog()
+		for _, s := range sc {
+			for _, e := range s.Endpoints {
+				ui.Message(fmt.Sprintf("\t%s\t%s\t%s\t%s", s.Type, e.Region, e.VersionId, s.Name))
+			}
+		}
 		log.Printf("Region: %s", b.config.AccessConfig.Region())
 		return nil, err
 	}
